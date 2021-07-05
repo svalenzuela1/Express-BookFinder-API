@@ -24,10 +24,10 @@ router.get("/searchOne", async(req, res) =>{
     try{
         const {title, ISBN} = req.body
         const book = await Book.findOne({title})
-        const uniqueID = await Book.findOne({ISBN})
+        const bookISBN = await Book.findOne({ISBN})
 
         book ?  res.status(200).json({statusCode: 200, book}) :
-            uniqueID ? res.status(200).json({statusCode: 200, uniqueID}) :
+            bookISBN ? res.status(200).json({statusCode: 200, bookISBN}) :
                 res.status(400).json({error: "No Book Found"})
 
     } catch(error){
