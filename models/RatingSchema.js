@@ -7,6 +7,6 @@ const ratingSchema = new Schema({
     rating: {type: Number, required: true}
 })
 
-const Rating = model("Rating", ratingSchema)
+const Rating = model("rating", ratingSchema)
 
 module.exports = Rating

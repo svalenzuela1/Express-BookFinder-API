@@ -10,6 +10,6 @@ const BookSchema = new Schema({
     rating: {type: Schema.Types.ObjectId, ref: "Rating"}
 })
 
-const Book = model("Book", BookSchema)
+const Book = model("book", BookSchema)
 
 module.exports = Book
