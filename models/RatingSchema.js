@@ -1,12 +1,12 @@
 const {Schema, model} = require("mongoose")
-const { BookRef } = require('./BookSchema')
+const { Book } = require('./BookSchema')
 
 const ratingSchema = new Schema({
-    book: {type: String, required: true, ref: BookRef.title},
-    ISBN: {type: Number, required: true, ref: BookRef.ISBN},
+    book: {type: String, required: true, ref: Book.title},
+    ISBN: {type: Number, required: true, ref: Book.ISBN},
     rating: {type: Number, required: true}
 })
 
-const Book = model("Rating", ratingSchema)
+const Rating = model("Rating", ratingSchema)
 
-module.exports = Book
+module.exports = Rating
