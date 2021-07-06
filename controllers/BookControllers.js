@@ -36,10 +36,10 @@ router.post('/search', async (req, res) =>{
     try{
         //NOTE: research how to modify query alphabetically
         //instead of by release date
-        //attempting to look for query
-        const query = JSON.stringify(req.query)
+        //query should be formatted as {"$search": "text"} to work
+        const query = req.body
         const findQuery = await Book.find( {
-                $text: {$search: query}
+                $text: query
             }
         ).sort({releaseDate: -1 })
 
