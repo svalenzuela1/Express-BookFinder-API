@@ -10,6 +10,9 @@ const BookSchema = new Schema({
     rating: {type: Schema.Types.ObjectId, ref: "Rating"}
 })
 
+//allows user to make search queries
+BookSchema.index({'$**': 'text'})
+
 const Book = model("book", BookSchema)
 // const Genre = model("Genre", new Schema({genre: [{type: String, required: true}]}))
 

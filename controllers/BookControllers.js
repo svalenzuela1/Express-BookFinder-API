@@ -31,19 +31,28 @@ try{
 })
 
 //Get all books by Query
-router.get('/search', async (req, res) =>{
+//paged text search query
+router.post('/search', async (req, res) =>{
     try{
         //NOTE: research how to modify query alphabetically
         //instead of by release date
-        const query = await Book.find(req.query).sort({releaseDate: -1 })
+        //attempting to look for query
+        const query = JSON.stringify(req.query)
+        const findQuery = await Book.find( {
+                $text: {$search: query}
+            }
+        ).sort({releaseDate: -1 })
 
         res.status(200).json({
             statusCode: 200,
             message:"Here are all the books that match the query",
-            query
+            findQuery
         })
     }catch(error){
-        res.status(400).json({statusCode:400, error: "Query didnt work"})
+        res.status(400).json({
+            statusCode:400,
+            error: "Query didnt work"
+        })
     }
 })
 
