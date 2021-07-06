@@ -13,7 +13,16 @@ router.get("/", async(req, res) =>{
 try{
     const allBooks = await Book.find({})
 
-    res.status(200).json({statusCode: 200, message:"Here all the books that currently exist", allBooks})
+   //check if there are any books in database
+    allBooks ? res.status(200).json({
+            statusCode: 200,
+            message: "Here all the books that currently exist",
+            allBooks
+        }) :
+        res.status(400).json({
+            statusCode: 400,
+            error: "There are No Books"
+        })
 
 
 }catch(error){
