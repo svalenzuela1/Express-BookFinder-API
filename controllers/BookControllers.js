@@ -2,16 +2,31 @@ require("dotenv").config()
 
 //book Schema
 const Book = require("../models/BookSchema")
+const Genre = require("../models/GenreSchema")
 
 //router
 const { Router } = require("express")
 const router = Router();
+
+//Get all books
+router.get("/", async(req, res) =>{
+try{
+    const allBooks = await Book.find({})
+
+    res.status(200).json({statusCode: 200, message:"Here all the books that currently exist", allBooks})
+
+
+}catch(error){
+    res.status(400).json({statusCode: 400, error: "Could not find Books"})
+}
+})
 
 //will create Book
 router.post("/", async (req, res) =>{
 
     try {
         const newBook = await Book.create(req.body);
+
 
         res.status(200).json({statusCode: 200, newBook});
     } catch(error){
@@ -20,7 +35,7 @@ router.post("/", async (req, res) =>{
 })
 
 //Search specific Book
-router.get("/searchOne", async(req, res) =>{
+router.get("/search/oneBook", async(req, res) =>{
     try{
         const {title, ISBN} = req.body
         const book = await Book.findOne({title})
@@ -36,4 +51,16 @@ router.get("/searchOne", async(req, res) =>{
 })
 
 
+
+//Search By Genre
+router.get('/genre', async(req, res) =>{
+    try{
+        const books = await Genre.find({})
+
+        books ? res.status(200).json({books}) :
+            res.status(400).json({error: "Sorry, No books here"})
+    }catch(error){
+        res.status(400).json(error)
+    }
+})
 module.exports = router
