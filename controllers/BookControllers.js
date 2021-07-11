@@ -99,13 +99,18 @@ router.get("/search/oneBook", async(req, res) =>{
 })
 
 //update a book
-router.put('/:id', async(req, res) =>{
+router.patch('/:id', async(req, res) =>{
     try{
-        const updatedBook = await Book.findByIdAndUpdate({_id: req.params.id}, req.body)
+        const book = await Book.findByIdAndUpdate({_id: req.params.id}, req.body, {useFindAndModify: false})
+
+        //line 104 is not sending me updated response through json
+        //create another variable to attempt to get updated response
+        const updatedBook = await Book.findOne({_id: req.params.id})
+
 
         //check if theres book in database
         //if successful send updated book to user
-        updatedBook ? res.status(200).json({
+        book ? res.status(200).json({
             statusCode: 200,
             updatedBook
         }) :
@@ -122,27 +127,27 @@ router.put('/:id', async(req, res) =>{
     }
 })
 
-//update the Book that is clicked on
-router.patch('/:id', async(req, res) =>{
+//delete a book
+router.delete('/:id', async(req, res) =>{
     try{
-        //find BY ID
-        //const {authors, ISBN, title, genre, releaseDate} = req.body
-        //const bookAuthors = await Book.findByIdAndUpdate({authors})
-        // const bookISBN = Book.findByIdAndUpdate({ISBN})
-        // const bookTitle = Book.findByIdAndUpdate({title})
-        // const bookGenre = Book.findByIdAndUpdate({genre})
-        // const bookReleaseDate = Book.findByIdAndUpdate({releaseDate})
+        const deleteBook = await Book.findByIdAndDelete({_id: req.params.id})
 
-        const book = await Book.findOneAndUpdate({_id: req.params.id}, req.body)
-
-        res.status(200).json({
-            statusCode: 200,
-            message: "Update was Made",
-            book
-        })
+        //check if theres book in database
+        //if successful send updated book to user
+        deleteBook ? res.status(200).json({
+                statusCode: 200,
+                message: "Book Has Been Deleted",
+                deleteBook
+            }) :
+            res.status(400).json({
+                statusCode: 400,
+                error: "Could not find Book To Delete, Try Again"
+            })
 
     }catch(error){
-        res.status(400).json({error: "Update was not made"})
+        res.status(400).json({
+            statusCode: 400,
+            error: "Could Not Delete Book"})
     }
 })
 
