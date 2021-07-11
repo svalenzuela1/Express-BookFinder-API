@@ -23,7 +23,6 @@ try{
             error: "There are No Books"
         })
 
-
 }catch(error){
     res.status(400).json({statusCode: 400, error: "Could not find Books"})
 }
@@ -40,7 +39,7 @@ router.post('/search', async (req, res) =>{
         const findQuery = await Book.find( {
                 $text: query
             }
-        ).sort({releaseDate: -1 })
+        )//.sort({releaseDate: -1 })
 
         res.status(200).json({
             statusCode: 200,
