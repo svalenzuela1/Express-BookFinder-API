@@ -101,12 +101,10 @@ router.get("/search/oneBook", async(req, res) =>{
 //update a book
 router.put('/:id', async(req, res) =>{
     try{
-        const {author} = req.body
-        const updatedBook = await Book.findOneAndUpdate(req.params.id, req.body)
+        const updatedBook = await Book.findByIdAndUpdate({_id: req.params.id}, req.body)
 
         //check if theres book in database
-
-        //currently only updating author
+        //if successful send updated book to user
         updatedBook ? res.status(200).json({
             statusCode: 200,
             updatedBook
