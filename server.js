@@ -21,6 +21,10 @@ app.use(morgan("tiny"))
 //insert Routers here
 app.use("/books", BookRouter)
 
+app.get("/", (req, res) => {
+    res.send("Welcome To BookFinder API")
+})
+
 //listener when server is running
 app.listen(PORT, () =>{
     console.log(`Port is listening, currently on ${PORT}`)
