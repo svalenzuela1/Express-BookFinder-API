@@ -1,5 +1,10 @@
 /node_modules
-.env
+
+#Have to reference mongoDB cluster in app
+#for AWS to use MONGODB
+#should only be uncommented for aws deployment
+#.env
+
 /.idea
 seed.js
 RatingSchema.js
