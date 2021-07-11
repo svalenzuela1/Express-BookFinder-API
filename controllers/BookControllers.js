@@ -98,8 +98,34 @@ router.get("/search/oneBook", async(req, res) =>{
     }
 })
 
+//update a book
+router.put('/:id', async(req, res) =>{
+    try{
+        const {author} = req.body
+        const updatedBook = await Book.findOneAndUpdate(req.params.id, req.body)
+
+        //check if theres book in database
+
+        //currently only updating author
+        updatedBook ? res.status(200).json({
+            statusCode: 200,
+            updatedBook
+        }) :
+            res.status(400).json({
+                statusCode: 400,
+                error: "Error Updating Book Try Again"
+            })
+
+    }catch(error){
+        res.status(400).json({
+            statusCode: 400,
+            error: error
+        })
+    }
+})
+
 //update the Book that is clicked on
-router.patch('/update/:id', async(req, res) =>{
+router.patch('/:id', async(req, res) =>{
     try{
         //find BY ID
         //const {authors, ISBN, title, genre, releaseDate} = req.body

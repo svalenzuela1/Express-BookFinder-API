@@ -3,7 +3,12 @@ require("dotenv").config()
 const Book = require('../models/BookSchema')
 //mongoose manages relationship between Node.js & MongoDB
 const mongoose = require("mongoose")
-const config = {useUnifiedTopology: true, useNewUrlParser: true}
+const config = {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useFindAndModify: true,
+    useCreateIndex: true
+}
 
 //destructure URI from .env file
 const {MONGODBURI} = process.env
