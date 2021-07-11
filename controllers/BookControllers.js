@@ -2,7 +2,6 @@ require("dotenv").config()
 
 //book Schema
 const Book = require("../models/BookSchema")
-const Genre = require("../models/GenreSchema")
 
 //router
 const { Router } = require("express")
@@ -63,9 +62,15 @@ router.post("/", async (req, res) =>{
         const newBook = await Book.create(req.body);
 
 
-        res.status(200).json({statusCode: 200, newBook});
+        res.status(200).json({
+            statusCode: 200,
+            newBook
+        });
     } catch(error){
-        res.status(400).json({statusCode: 400, error: "Could Not Create Book. Please Try Again"})
+        res.status(400).json({
+            statusCode: 400,
+            error: "Could Not Create Book. Please Try Again"
+        })
     }
 })
 
@@ -77,11 +82,19 @@ router.get("/search/oneBook", async(req, res) =>{
         const bookISBN = await Book.findOne({ISBN})
 
         book ?  res.status(200).json({statusCode: 200, book}) :
-            bookISBN ? res.status(200).json({statusCode: 200, bookISBN}) :
-                res.status(400).json({error: "No Book Found"})
+            bookISBN ? res.status(200).json({
+                    statusCode: 200,
+                    bookISBN
+            }) :
+                res.status(400).json({
+                    error: "No Book Found"
+                })
 
     } catch(error){
-        res.status(400).json({statusCode:400, error: "Error Finding Book, Please Try Again"})
+        res.status(400).json({
+            statusCode:400,
+            error: "Error Finding Book, Please Try Again"
+        })
     }
 })
 
@@ -109,17 +122,4 @@ router.patch('/update/:id', async(req, res) =>{
     }
 })
 
-
-//STILL WORKING ON THIS ROUTE
-//Search By Genre
-router.get('/genre', async(req, res) =>{
-    try{
-        const books = await Genre.find({})
-
-        books ? res.status(200).json({books}) :
-            res.status(400).json({error: "Sorry, No books here"})
-    }catch(error){
-        res.status(400).json(error)
-    }
-})
 module.exports = router
