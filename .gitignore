@@ -3,3 +3,10 @@
 /.idea
 seed.js
 RatingSchema.js
+.elasticbeanstalk/
+.gitignore
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
