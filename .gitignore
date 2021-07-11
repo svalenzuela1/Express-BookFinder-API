@@ -2,3 +2,4 @@
 .env
 /.idea
 seed.js
+./models/RatingSchema.js
