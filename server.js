@@ -20,6 +20,7 @@ app.use(morgan("tiny"))
 
 //insert Routers here
 app.use("/books", BookRouter)
+
 //listener when server is running
 app.listen(PORT, () =>{
     console.log(`Port is listening, currently on ${PORT}`)
