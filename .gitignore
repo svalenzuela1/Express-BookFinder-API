@@ -8,8 +8,11 @@
 /.idea
 seed.js
 RatingSchema.js
+.ebextensions
 .elasticbeanstalk/
-.gitignore
+
+#AWS wants .gitignore to be added
+#.gitignore
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
