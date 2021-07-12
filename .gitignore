@@ -3,7 +3,7 @@
 #Have to reference mongoDB cluster in app
 #for AWS to use MONGODB
 #should only be uncommented for aws deployment
-#.env
+.env
 
 /.idea
 seed.js
