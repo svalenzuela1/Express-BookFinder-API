@@ -62,7 +62,9 @@ Example Request Body
 }
 ```
 * Search For Books
-###POST `/books/search`
+
+### POST `/books/search`
+
 Example Request Body
 
 ```json
@@ -73,7 +75,8 @@ Example Request Body
 
 * Update A Book
 
-###PATCH `/books/:id`
+### PATCH `/books/:id`
+
 Example Request Body
 ```json
   {
@@ -83,8 +86,10 @@ Example Request Body
 ```
 * Delete a Book
 ### Delete `/books/:id`
-####No Request Body Needed
+#### No Request Body Needed
+
 Response
+
 ```json
 {
     "statusCode": 200,
