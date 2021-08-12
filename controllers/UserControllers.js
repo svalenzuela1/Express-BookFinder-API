@@ -30,7 +30,7 @@ router.post('/login', async (req, res) =>{
         if(user){
             const token = await jwt.sign({username}, SECRET)
 
-            res.status(200).json({user, token})
+            res.status(200).json({username, token})
         } else {
             res.status(400).json({error: 'User Does Not Exist'})
         }
