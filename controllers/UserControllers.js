@@ -39,8 +39,8 @@ router.post('/login', async (req, res) =>{
         res.status(400).json({error: 'Credentials Do Not Match. Please Try Again'})
     }
 })
-
-router.delete('/:id', async (req, res, next) =>{
+    const username = ''
+router.delete(`/:username`, async (req, res, next) =>{
     try {
 
         if (req.headers.authorization) {
@@ -56,10 +56,13 @@ router.delete('/:id', async (req, res, next) =>{
                 if(payload) {
                     req.payload = payload
 
-                    const user = await User.findById({_id: req.params.id})
+                    const cutOff = req.params.username.indexOf("=")
+                    const user = req.params.username.slice(cutOff+1, req.params.username.length)
 
+                    await User.findOne({username: user})
+                    console.log('this is the user',user, req.params.username)
                     if (user) {
-                        await User.findByIdAndDelete({_id: req.params.id})
+                        await User.findOneAndDelete({username: user})
 
                         res.status(200).json({
                             message: "User Has Been Deleted"
