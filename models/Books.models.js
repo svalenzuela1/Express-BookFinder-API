@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose")
 
-const BookSchema = new Schema({
+const BooksModels = new Schema({
     ISBN: {type: Number, unique: true, required: true},
     authors: {type: Array},
     title: {type: String, required: true},
@@ -12,8 +12,8 @@ const BookSchema = new Schema({
 })
 
 //allows user to make search queries
-BookSchema.index({'$**': 'text'})
+BooksModels.index({'$**': 'text'})
 
-const Book = model("book", BookSchema)
+const Book = model("book", BooksModels)
 
 module.exports = Book

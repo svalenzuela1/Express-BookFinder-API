@@ -1,6 +1,6 @@
 require('dotenv').config
 
-const User = require('../models/UserSchema')
+const User = require('../models/User.models')
 
 const jwt = require('jsonwebtoken')
 const router = require('express').Router()

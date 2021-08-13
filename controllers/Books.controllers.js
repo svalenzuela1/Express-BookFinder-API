@@ -1,7 +1,7 @@
 require("dotenv").config()
 
 //book Schema
-const Book = require("../models/BookSchema")
+const Book = require("../models/Books.models")
 
 //router
 const { Router } = require("express")

@@ -8,8 +8,8 @@ const cors = require("cors")
 const morgan = require("morgan")
 
 //import controllers
-const BookRouter = require('./controllers/BookControllers')
-const UserRouter = require('./controllers/UserControllers')
+const BookRouter = require('./controllers/Books.controllers')
+const UserRouter = require('./controllers/User.controllers')
 
 //import mongoose connection from DB
 const mongoose = require('./db/db')

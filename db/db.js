@@ -1,7 +1,7 @@
 //allows us to read from env file
 require("dotenv").config()
 
-const Book = require('../models/BookSchema')
+const Book = require('../models/Books.models')
 
 //mongoose manages relationship between Node.js & MongoDB
 const mongoose = require("mongoose")
