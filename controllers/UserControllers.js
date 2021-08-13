@@ -40,4 +40,54 @@ router.post('/login', async (req, res) =>{
     }
 })
 
+router.delete('/:id', async (req, res, next) =>{
+    try {
+
+        if (req.headers.authorization) {
+
+            const token = req.headers.authorization.split(" ")[1]
+            const payload = await jwt.verify(token, SECRET)
+
+            // User.findOneAndDelete({_id: req.params.id})
+
+            //query strings
+            // const {username} = req.params.username
+
+                if(payload) {
+                    req.payload = payload
+
+                    const user = await User.findById({_id: req.params.id})
+
+                    if (user) {
+                        await User.findByIdAndDelete({_id: req.params.id})
+
+                        res.status(200).json({
+                            message: "User Has Been Deleted"
+                        })
+                    } else {
+                        res.status(400).json({error: "User not found"})
+                    }
+                } else{
+
+                    res.status(400).json({error: "Not Authorized"})
+                }
+
+
+
+
+
+            } else {
+
+                res.status(400).json({
+                    error: "Token Invalid"
+                })
+            }
+
+    } catch(error){
+        res.status(400).json({
+            error: error.message //"User Could Not Be Deleted, Try Again"
+        })
+    }
+})
+
 module.exports = router
