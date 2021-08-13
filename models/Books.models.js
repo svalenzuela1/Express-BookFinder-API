@@ -8,7 +8,7 @@ const BooksModels = new Schema({
     genre: {type: Array},
     description: {type: String},
     releaseDate: {type: String, required: true},
-    rating: {type: Schema.Types.ObjectId, ref: "Rating"}
+    // rating: {type: Schema.Types.ObjectId, ref: "Rating"}
 })
 
 //allows user to make search queries
