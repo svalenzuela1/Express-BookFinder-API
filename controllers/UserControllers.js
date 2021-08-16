@@ -12,7 +12,7 @@ router.post('/signup', async (req, res) =>{
     try{
         const newUser = await User.create(req.body)
 
-        res.status(200).json({message: 'User Successfully Created', newUser})
+        res.status(201).json({message: 'User Successfully Created', newUser})
 
     }catch(error){
         res.status(400).json({error: 'Could Not Create User, Please Try Again.'})
@@ -28,7 +28,7 @@ router.post('/login', async (req, res) =>{
 
         //check if user exists
         if(user){
-            const token = await jwt.sign({username}, SECRET)
+            const token = await jwt.sign({username}, SECRET, {expiresIn: '365 days'})
 
             res.status(200).json({username, token})
         } else {
@@ -39,7 +39,7 @@ router.post('/login', async (req, res) =>{
         res.status(400).json({error: 'Credentials Do Not Match. Please Try Again'})
     }
 })
-    const username = ''
+
 router.delete(`/:username`, async (req, res, next) =>{
     try {
 
@@ -48,21 +48,11 @@ router.delete(`/:username`, async (req, res, next) =>{
             const token = req.headers.authorization.split(" ")[1]
             const payload = await jwt.verify(token, SECRET)
 
-            // User.findOneAndDelete({_id: req.params.id})
-
-            //query strings
-            // const {username} = req.params.username
-
-                if(payload) {
+                if(payload.username === req.params.username) {
                     req.payload = payload
 
-                    const cutOff = req.params.username.indexOf("=")
-                    const user = req.params.username.slice(cutOff+1, req.params.username.length)
-
-                    await User.findOne({username: user})
-                    console.log('this is the user',user, req.params.username)
-                    if (user) {
-                        await User.findOneAndDelete({username: user})
+                    if (req.params.username) {
+                        await User.findOneAndDelete({username: req.params.username})
 
                         res.status(200).json({
                             message: "User Has Been Deleted"
@@ -72,12 +62,8 @@ router.delete(`/:username`, async (req, res, next) =>{
                     }
                 } else{
 
-                    res.status(400).json({error: "Not Authorized"})
+                    res.status(401).json({error: "Not Authorized"})
                 }
-
-
-
-
 
             } else {
 
@@ -87,7 +73,7 @@ router.delete(`/:username`, async (req, res, next) =>{
             }
 
     } catch(error){
-        res.status(400).json({
+        res.status(500).json({
             error: error.message //"User Could Not Be Deleted, Try Again"
         })
     }
