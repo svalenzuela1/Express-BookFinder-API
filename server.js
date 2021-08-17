@@ -10,7 +10,7 @@ const morgan = require("morgan");
 //import controllers
 const BookRouter = require("./routes/Books.routes");
 const UserRouter = require("./routes/User.routes");
-
+const FavoritesRouter = require("./routes/Favorites.routes");
 //import mongoose connection from DB
 const mongoose = require("./db/db");
 
@@ -22,6 +22,7 @@ app.use(morgan("tiny"));
 //insert Routers here
 app.use("/books", BookRouter);
 app.use("/user", UserRouter);
+app.use("/user/favorites", FavoritesRouter);
 
 app.get("/", (req, res) => {
   res.send("Welcome To BookFinder API");

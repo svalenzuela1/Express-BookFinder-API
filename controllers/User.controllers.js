@@ -3,7 +3,6 @@ require("dotenv").config;
 const User = require("../models/User.models");
 
 const jwt = require("jsonwebtoken");
-const router = require("express").Router();
 
 const { SECRET } = process.env;
 
@@ -82,5 +81,18 @@ exports.deleteUser = async (req, res, next) => {
     res.status(500).json({
       error: error.message, //"User Could Not Be Deleted, Try Again"
     });
+  }
+};
+
+exports.getUser = async (req, res) => {
+  try {
+    const user = await User.findOne({ username: req.params.username });
+
+    res.status(200).json({
+      message: "Here is user information",
+      user,
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };
