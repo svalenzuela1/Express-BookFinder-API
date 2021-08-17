@@ -8,7 +8,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 
 //import controllers
-const BookRouter = require("./controllers/Books.controllers");
+const BookRouter = require("./routes/Books.routes");
 const UserRouter = require("./routes/User.routes");
 
 //import mongoose connection from DB

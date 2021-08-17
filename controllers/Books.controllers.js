@@ -8,7 +8,7 @@ const { Router } = require("express");
 const router = Router();
 
 //Get all books
-router.get("/", async (req, res) => {
+exports.getAllBooks = async (req, res) => {
   try {
     const allBooks = await Book.find({});
 
@@ -26,11 +26,11 @@ router.get("/", async (req, res) => {
   } catch (error) {
     res.status(400).json({ statusCode: 400, error: "Could not find Books" });
   }
-});
+};
 
 //Get all books by Query
 //paged text search query
-router.post("/search", async (req, res) => {
+exports.searchBooks = async (req, res) => {
   try {
     //NOTE: research how to modify query alphabetically
     //instead of by release date
@@ -51,10 +51,10 @@ router.post("/search", async (req, res) => {
       error: "Query didnt work",
     });
   }
-});
+};
 
 //will create Book
-router.post("/", async (req, res) => {
+exports.createBook = async (req, res) => {
   try {
     const newBook = await Book.create(req.body);
 
@@ -68,10 +68,10 @@ router.post("/", async (req, res) => {
       error: "Could Not Create Book. Please Try Again",
     });
   }
-});
+};
 
 //Search specific Book
-router.get("/search/oneBook", async (req, res) => {
+exports.searchSpecificBook = async (req, res) => {
   try {
     const { title, ISBN } = req.body;
     const book = await Book.findOne({ title });
@@ -93,10 +93,10 @@ router.get("/search/oneBook", async (req, res) => {
       error: "Error Finding Book, Please Try Again",
     });
   }
-});
+};
 
 //update a book
-router.patch("/:id", async (req, res) => {
+exports.updateBook = async (req, res) => {
   try {
     const book = await Book.findByIdAndUpdate(
       { _id: req.params.id },
@@ -125,10 +125,10 @@ router.patch("/:id", async (req, res) => {
       error: error,
     });
   }
-});
+};
 
 //delete a book
-router.delete("/:id", async (req, res) => {
+exports.deleteBook = async (req, res) => {
   try {
     const deleteBook = await Book.findByIdAndDelete({ _id: req.params.id });
 
@@ -150,6 +150,4 @@ router.delete("/:id", async (req, res) => {
       error: "Could Not Delete Book",
     });
   }
-});
-
-module.exports = router;
+};
