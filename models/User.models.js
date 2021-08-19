@@ -10,7 +10,7 @@ const UserModels = new Schema(
       minLength: 3,
     },
     password: { type: String, required: true, maxlength: 50, minLength: 3 },
-    favorites: [{ type: Schema.Types.ObjectId, ref: "favorites" }],
+    // favorites: [{ type: Schema.Types.ObjectId, ref: "favorites" }],
   },
   { timestamps: true }
 );
