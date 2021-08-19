@@ -54,10 +54,24 @@ exports.findUserFavorites = async (req, res) => {
         if (req.params.username) {
           const user = await User.find({ username: req.params.username });
           const userFavorites = await Favorites.find({ username: user._id });
+
+          const data = [];
+
+          await Promise.all(
+            userFavorites.map(async (element) => {
+              element.book = await Books.findOne({ _id: element.book });
+              // console.log("data for books", element.book);
+              // console.log(element);
+              data.push(element);
+              return element;
+            })
+          );
+
+          console.log("data outside the map function", data);
+
           res.status(200).json({
             message: "it works",
-            user: user.username,
-            favorites: userFavorites,
+            favorites: data,
           });
         }
       } else {
