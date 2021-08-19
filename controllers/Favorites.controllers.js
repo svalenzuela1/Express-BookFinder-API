@@ -26,7 +26,16 @@ exports.showFavoritesPerBook = async (req, res) => {
     const targetBook = await Books.findById({ _id: req.params.bookId });
 
     const favorites = await Favorites.find({ book: targetBook._id });
-  } catch (error) {}
+
+    res.status(200).json({
+      message: `Here are all Users That Favorite ${targetBook.title}`,
+      favorites,
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: `Could Not find Book Favorites`,
+    });
+  }
 };
 
 exports.findAllFavorites = async (req, res) => {
