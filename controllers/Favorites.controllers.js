@@ -55,23 +55,16 @@ exports.findUserFavorites = async (req, res) => {
           const user = await User.find({ username: req.params.username });
           const userFavorites = await Favorites.find({ username: user._id });
 
-          const data = [];
-
           await Promise.all(
             userFavorites.map(async (element) => {
               element.book = await Books.findOne({ _id: element.book });
-              // console.log("data for books", element.book);
-              // console.log(element);
-              data.push(element);
               return element;
             })
           );
 
-          console.log("data outside the map function", data);
-
           res.status(200).json({
-            message: "it works",
-            favorites: data,
+            message: "Here are all user favorites",
+            favorites: userFavorites,
           });
         }
       } else {
@@ -81,7 +74,33 @@ exports.findUserFavorites = async (req, res) => {
       res.status(400).json({ error: "No Token Provided" });
     }
   } catch (error) {
-    res.status(500).json("The findUser Favorites didn't work");
+    res.status(500).json({ error: "Could not find Favorites" });
+  }
+};
+
+exports.removeFavorite = async (req, res) => {
+  try {
+    if (req.headers.authorization) {
+      const token = req.headers.authorization.split(" ")[1];
+      const payload = await jwt.verify(token, SECRET);
+
+      if (payload.username === req.params.username) {
+        req.payload = payload;
+
+        if (req.params.username) {
+          console.log("working");
+          await Favorites.findOneAndDelete({ _id: req.params.favoriteId });
+
+          res.status(200).json({ message: "Favorite Removed" });
+        }
+      } else {
+        res.status(400).json({ error: "Not Authorized" });
+      }
+    } else {
+      res.status(400).json({ error: "No Token Provided" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Favorite Could Not Be Removed" });
   }
 };
 

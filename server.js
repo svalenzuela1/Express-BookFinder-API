@@ -22,7 +22,7 @@ app.use(morgan("tiny"));
 //insert Routers here
 app.use("/books", BookRouter);
 app.use("/user", UserRouter);
-app.use("/user/favorites", FavoritesRouter);
+app.use("/favorites", FavoritesRouter);
 
 app.get("/", (req, res) => {
   res.send("Welcome To BookFinder API");
